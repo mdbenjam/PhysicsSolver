@@ -51,6 +51,9 @@ function drawScene() {
         }
         if (trajectorySelected) {
             ghostBallX = mouseX;
+            if (mouseX < ballX) {
+                ghostBallX = ballX;
+            }
             if (Math.abs(mouseX - h) < 10) {
                 ghostBallX = h;
             }
@@ -121,27 +124,50 @@ $("#drawing").mouseout(function() {
 // Clear highlighted region
 $(".possibleHighlight").focus(function() {
     $("#highlightedRegion").css('background-color', 'white');
-    $("myPopover").popover("show");
+    $("#myPopover").popover('hide');
 });
+
+var maxRangeProblem = false;
+var maxHeightProblem = false;
 
 // Select a place in the trajectory
 $("#drawing").click(function(e) {
     if (freeze) {
         freeze = false;
         $("#myPopover").popover('hide'); 
+        $("#highlightedRegion").css('background-color', 'white');
+        if (maxRangeProblem) {
+            $("#finalYPosition").val("");
+        }
+        if (maxHeightProblem) {
+            $("#finalYVelocity").val("");
+        }
     } else {
 
         var h = canvasWidth / 2;
         var startingX = ballX;
+        maxRangeProblem = false;
+        maxHeightProblem = false;
+
         if (Math.abs(mouseX - h) < 10) {
+            maxHeightProblem = true;
             $("#finalYVelocity").val("0");
         } else {
             if (Math.abs(mouseX - (2 * h - startingX)) < 10) {
+                maxRangeProblem = true;
                 $("#finalYPosition").val(0);
             } else {
-                $("#myPopover").offset({top: ghostBallY + $drawing.offset().top, left: ghostBallX + $drawing.offset().left + 20});
-                $("#highlightedRegion").css('background-color', 'yellow');
-                $("#myPopover").popover('show'); 
+                var oneSet = false
+                $(".possibleHighlight").each(function (index) {
+                    if ($(this).val() != "") {
+                        oneSet = true;
+                    }
+                });
+                if (!oneSet) {
+                    $("#myPopover").offset({top: ghostBallY + $drawing.offset().top, left: ghostBallX + $drawing.offset().left + 20});
+                    $("#highlightedRegion").css('background-color', 'yellow');
+                    $("#myPopover").popover('show'); 
+                }
             }
         } 
         freeze = true;
@@ -168,7 +194,6 @@ $(".form-control").change(function () {
         vx0: vx0, vy0: vy0, vf: vf, vyf: vyf,
     dxf: dxf, dyf: dyf, dx0: 0, dy0: 0}
 
-$.get("", function(values) {
-    alert("Data Sent");
-});
+    $.get("", function(values) {
+    });
 });
