@@ -12,7 +12,7 @@ def double(x):
 
 @app.route("/")
 def index():
-    return render_template("index.html", cake=2)
+    return render_template("index.html")
 
 
 @app.route("/physics.json")
@@ -21,6 +21,13 @@ def physics():
     for k in request.args:
         rv[k] = random.randint(0, 100)
     return json.dumps(rv)
+
+
+@app.route("/general")
+def general():
+    options = ["force", "mass", "acceleration"]
+    return render_template("general.html", options=options)
+
 
 if __name__ == "__main__":
     app.run(port=5001, debug=True)

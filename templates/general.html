@@ -1,0 +1,54 @@
+<html>
+    <body>
+        <form method="post">
+            <p> 
+            <button id="addVar">Add Variable</button>
+            <input required id="varName" type="text"></input>
+            </p>
+            <input id="submit" type="submit" value="Check">
+        </form>
+        <div id="response">
+        </div>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>
+            var getVariable = function(varName) {
+                return '<p><label for="' + varName + '">' + varName + '</label><input class="value" type="number" name="' + varName + '" id="' + varName + '"><button class="removeVar">Remove Variable</button></p>';
+            }
+
+            var vars = {};
+
+            $('form').on('click', '.removeVar', function() {
+                var varName = $(this).prev().prev().text();
+                delete vars[varName];
+                $(this).parent().remove();
+
+            });
+
+            $('#addVar').click(function(e){
+                e.preventDefault();
+
+                var varName = $("#varName").val();
+                if (varName && !(varName in vars)) {
+                    var $node = getVariable(varName);
+                    vars[varName] = true;
+                    $(this).parent().before($node);
+                }
+            });
+
+            $("#submit").click(function(e) {
+                e.preventDefault();
+
+                var data = {};
+                $(".value").each(function(i, node) {
+                    var $node = $(node);
+                    var k = $node.prev().text();
+                    data[k] = $node.val();
+                });
+
+                $.get("/physics.json", data, function(rv) {
+                    $("#response").text(rv);
+                });
+            })
+        </script>
+    </body>
+</html>
