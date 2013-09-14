@@ -1,57 +1,72 @@
-<html>
-    <head>
-        <link rel="stylesheet" type="text\css" href="static/bootstrap/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text\css" href="static/custom.css">
-    </head>
-    <body>
-           
-        <div id="content">
-            <div class="container">
-                <div class="row">
+{% extends "_base.html" %}
 
-                </div>
+{% block stylesheets %}
+<link rel="stylesheet" type="text\css" href="static/custom.css">
+{% endblock %}
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-addon">Angle:</span>
-                            <input id="angle" type="text" class="form-control" placeholder="Angle">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-addon">Time:</span>
-                            <input id="t" type="text" class="form-control" placeholder="Time">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-addon">Gravity:</span>
-                            <input id="ay" type="text" class="form-control" placeholder="9.81">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-addon">Initial Velocity:</span>
-                            <input id="v0" type="text" class="form-control" placeholder="Velocity">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-addon">Initial x-Velocity:</span>
-                            <input id="vx0" type="text" class="form-control" placeholder="x-Velocity">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <span class="input-group-addon">Initial y-Velocity:</span>
-                            <input id="vy0" type="text" class="form-control" placeholder="y-Velocity">
-                        </div>
-                    </div>
-                </div>
+{% block body %}
+<div id="content">
+    <div class="container">
+        <div class="row">
 
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">Angle:</span>
+                    <input id="angle" type="text" class="form-control" placeholder="Angle">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">Time:</span>
+                    <input id="t" type="text" class="form-control" placeholder="Time">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">Gravity:</span>
+                    <input id="ay" type="text" class="form-control" placeholder="9.81">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">Initial Velocity:</span>
+                    <input id="v0" type="text" class="form-control" placeholder="Velocity">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">Initial x-Velocity:</span>
+                    <input id="vx0" type="text" class="form-control" placeholder="x-Velocity">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">Initial y-Velocity:</span>
+                    <input id="vy0" type="text" class="form-control" placeholder="y-Velocity">
+                </div>
+            </div>
+        </div>
+
+        <div id="highlightedRegion">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">Final Velocity:</span>
+                        <input id="finalVelocity" type="text" class="form-control possibleHighlight" placeholder="Velocity">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">Final y-Velocity:</span>
+                        <input id="vyf" type="text" class="form-control possibleHighlight" placeholder="y-Velocity">
+                    </div>
+                </div>
+            </div>
                 <div id="highlightedRegion">
                     <div class="row">
                         <div class="col-md-6">
@@ -83,23 +98,28 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <div id="myPopover" data-content="Since you selected a non-standard location, you must specify at least one of the highlighted fields. If you do not specify either the velocity or angle then you'll need to specify two of the higlighted fields." data-original-title="Specification Needed"></div>
-                        <div id="canvasWrapper">
-                            <canvas id="drawing" width="800px" height="500px">
-                            </canvas>
-                        </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">y-Height:</span>
+                        <input id="dyf" type="text" class="form-control possibleHighlight" placeholder="y-Height">
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-md-12">
+                <div id="myPopover" data-content="Since you selected a non-standard location, you must specify at least one of the highlighted fields. If you do not specify either the velocity or angle then you'll need to specify two of the higlighted fields." data-original-title="Specification Needed"></div>
+                <div id="canvasWrapper">
+                    <canvas id="drawing" width="800px" height="500px">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
 
-
-    </body>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="static/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="static/js/physics.js"></script>
-</html>
+{% block js %}
+<script src="static/js/physics.js"></script>
+{% endblock %}
