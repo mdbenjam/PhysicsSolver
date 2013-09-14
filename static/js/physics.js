@@ -164,11 +164,22 @@ $(".form-control").change(function () {
     dxf = $("#finalXPosition").val();
     dyf = $("#finalYPosition").val();
 
-    values = {angle: angle, t: t, ay: ay, v0: v0,
-        vx0: vx0, vy0: vy0, vf: vf, vyf: vyf,
-    dxf: dxf, dyf: dyf, dx0: 0, dy0: 0}
+    values = {
+        angle: angle,
+        t: t,
+        ay: ay,
+        v0: v0,
+        vx0: vx0,
+        vy0: vy0,
+        vf: vf,
+        vyf: vyf,
+        dxf: dxf,
+        dyf: dyf,
+        dx0: 0,
+        dy0: 0
+    };
 
-$.get("", function(values) {
-    alert("Data Sent");
+$.get("/physics.json", function(values) {
+    alert(values);
 });
 });
