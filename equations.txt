@@ -1,0 +1,16 @@
+# Kinematics Equations
+dxf = 1 / 2 * ax * t ^ 2 + vx * t + dx0
+dyf = 1 / 2 * ay * t ^ 2 + vy * t + dy0
+
+vxf = vx0 + ax * t
+vyf = vy0 + ay * t
+
+vxf ^ 2 = vx0 ^ 2 + 2 * ax * dx
+vyf ^ 2 = vy0 ^ 2 + 2 * ay * dy
+
+# Vectors
+vx = v * cos( angle )
+vy = v * sin( angle )
+
+ax = a * cos( angle )
+ay = a * sin( angle )

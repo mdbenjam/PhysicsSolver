@@ -1,0 +1,42 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+    <canvas id="drawing" width="800px" height="500px">
+    </canvas>
+    <script>
+        var canvas = document.getElementById("drawing");
+        var canvasHeight = 500;
+        var canvasWidth = 800;
+
+        var drawParabola = function(slope, x, y) {
+            var h = canvasWidth / 2;
+            var k = 0;
+            var a = -y/((2*h+x)*(-x-h));
+            var b = -2*a*h;
+            var c = k;
+            console.log(a + " " + b);
+            iterations = 0;
+            while (y < canvasHeight && iterations < 50) {
+                iterations = iterations + 1;
+                x = x + 10;
+                y = a * (x - h) * (x - h) + b * (x - h);
+                console.log(x + " " + y);
+                var ctx = canvas.getContext("2d");
+                ctx.fillStyle = "#FF0000"
+                ctx.beginPath();
+                ctx.arc(x, y, 2, 0, 2*Math.PI);
+                ctx.stroke();
+            }
+        };
+        drawParabola(1, 300, 200);
+
+        var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#FF0000"
+        ctx.beginPath();
+        ctx.arc(250, 200, 25, 0, 2*Math.PI);
+        ctx.stroke();
+    </script>
+    </body>
+</html>
