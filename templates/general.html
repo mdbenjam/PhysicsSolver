@@ -1,6 +1,7 @@
 {% extends "_base.html" %}
 
 {% block body %}
+<h1>General Physics Solver</h1>
 <form method="post">
     <p> 
     <button id="addVar">Add Variable</button>
@@ -9,6 +10,10 @@
     <input id="submit" type="submit" value="Check">
 </form>
 <div id="response">
+    <h2>Value</h2>
+    <p><span id="value"></span></p>
+    <h2>Equations used</h2>
+    <ol id="equations"></ol>
 </div>
 {% endblock %}
 
@@ -39,6 +44,16 @@
         }
     });
 
+    var showResult = function(value, equations) {
+        var i;
+        var $response = $("#equations");
+        $response.empty();
+        $("#value").text(value);
+        for (i = 0; i < equations.length; i++) {
+            $response.append('<li>' + equations[i] + '</li>');
+        }
+    };
+
     $("#submit").click(function(e) {
         e.preventDefault();
 
@@ -50,12 +65,13 @@
         });
 
         $.get("/physics.json", data, function(rv) {
-            $("#response").text(rv);
+            data = JSON.parse(rv)
+            showResult(data.value, data.eqs);
         });
     })
 
     $("#varName").typeahead({
-        source: ["force", "mass", "acceleration"],
+        source: ["f", "m", "a", "dyf", "ay", "t", "vy0", "dy0", "vyf", "dy", "v0", "angle", "pressure", "number_molecules", "conductivity", "temperature", "volume", "kinetic_avg", "v_rms"],
     });
 </script>
 {% endblock %}

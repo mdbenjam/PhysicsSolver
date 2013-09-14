@@ -22,8 +22,6 @@ def physics():
     output_dic = {}
     returned_dic = {}
     for k in request.args:
-        request.args[k]
-        k
         try:
             input_dic[k] = float(request.args[k])
             input_list.append(k)
