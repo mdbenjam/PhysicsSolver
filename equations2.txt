@@ -1,0 +1,32 @@
+# Kinematics Equations
+#dxf = 1 / 2 * ax * t ** 2 + vx0 * t + dx0
+dyf = 1 / 2 * ay * t ** 2 + vy0 * t + dy0
+
+#vxf = vx0 + ax * t
+vyf , vy0 + ay * t
+
+#vxf ** 2 = vx0 ** 2 + 2 * ax * dx
+vyf ** 2 , vy0 ** 2 + 2 * ay * dy
+
+# Vectors
+#vx0 = v0 * cos( angle )
+vy0 , v0 * angle
+#vxf = vf * cos( angle )
+#vyf = vf * sin( angle )
+
+#ax = a * cos( angle )
+#ay = a * sin( angle )
+
+# Test
+f , m * a
+x , m + t
+r , q / t
+
+# Test2
+mols , mass / molar_mass
+
+#Thermodynamics
+#pressure , rate * temperature / volume
+pressure , number_molecules * conductivity * temperature / volume
+kinetic_avg , 3 /2 * conductivity * temperature
+v_rms , ( 3.0 * conductivity * temperature / molecular_mass ) ** ( 0.5 )

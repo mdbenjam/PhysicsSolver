@@ -2,3 +2,5 @@
 *.swp
 
 oldindex.html
+
+*.pyc
