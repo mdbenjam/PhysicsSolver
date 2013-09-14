@@ -10,9 +10,6 @@ vyf ** 2 , vy0 ** 2 + 2 * ay * dy
 
 # Vectors
 #vx0 = v0 * cos( angle )
-
-vy0 , v0 * math.sin( angle )
-
 vy0 , v0 * angle
 #vxf = vf * cos( angle )
 #vyf = vf * sin( angle )
@@ -33,6 +30,3 @@ mols , mass / molar_mass
 pressure , number_molecules * conductivity * temperature / volume
 kinetic_avg , 3 /2 * conductivity * temperature
 v_rms , ( 3.0 * conductivity * temperature / molecular_mass ) ** ( 0.5 )
-
-v_rms , ( 3.0 * conductivity * temperature / molecular_mass ) ** ( 0.5 )
-
