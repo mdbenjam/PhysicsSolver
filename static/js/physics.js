@@ -8,6 +8,13 @@ var canvasWidth = 800;
 var ghostBallX = -1;
 var ghostBallY = -1;
 
+var inputedCells = {'angle': false, 't': false, 'ay': false, 'v0': false,
+    'vx0': false, 'vy0': false, 'vf': false, 'vyf': false,
+    'dxf': false, 'dyf': false};
+
+var cellNames = ['angle', 't', 'ay', 'v0', 'vx0', 'vy0', 'vf', 'vyf',
+    'dxf', 'dyf'];
+
 function drawScene() {
 
     var canvas = document.getElementById("drawing");
@@ -137,10 +144,10 @@ $("#drawing").click(function(e) {
         $("#myPopover").popover('hide'); 
         $("#highlightedRegion").css('background-color', 'white');
         if (maxRangeProblem) {
-            $("#finalYPosition").val("");
+            $("#dyf").val("");
         }
         if (maxHeightProblem) {
-            $("#finalYVelocity").val("");
+            $("#vyf").val("");
         }
     } else {
 
@@ -151,11 +158,11 @@ $("#drawing").click(function(e) {
 
         if (Math.abs(mouseX - h) < 10) {
             maxHeightProblem = true;
-            $("#finalYVelocity").val("0");
+            $("#vyf").val("0");
         } else {
             if (Math.abs(mouseX - (2 * h - startingX)) < 10) {
                 maxRangeProblem = true;
-                $("#finalYPosition").val(0);
+                $("#dyf").val("0");
             } else {
                 var oneSet = false
                 $(".possibleHighlight").each(function (index) {
@@ -174,21 +181,32 @@ $("#drawing").click(function(e) {
     }
 });
 
+function isNumber(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
 // Send off the data to the server
 $(".form-control").change(function () {
+    if (isNumber($(this).val())) {
+        inputedCells[$(this).attr('id')] = true;
+    } else {
+        isNumber($(this).val(''));
+        inputedCells[$(this).attr('id')] = false;
+    }
+
     angle = $("#angle").val();
-    t = $("#time").val();
-    ay = $("#gravity").val();
+    t = $("#t").val();
+    ay = $("#ay").val();
 
-    v0 = $("#initialVelocity").val();
-    vx0 = $("#initialXVelocity").val();
-    vy0 = $("#initialYVelocity").val();
+    v0 = $("#v0").val();
+    vx0 = $("#vx0").val();
+    vy0 = $("#vy0").val();
 
-    vf = $("#finalVelocity").val();
-    vyf = $("#finalYVelocity").val();
+    vf = $("#vf").val();
+    vyf = $("#vyf").val();
 
-    dxf = $("#finalXPosition").val();
-    dyf = $("#finalYPosition").val();
+    dxf = $("#dxf").val();
+    dyf = $("#dyf").val();
 
     values = {
         angle: angle,
@@ -204,8 +222,21 @@ $(".form-control").change(function () {
         dx0: 0,
         dy0: 0
     };
+    $.get("/physics.json", values, function(returned) {
+        jsonReturned = JSON.parse(returned);
+        $.each(cellNames, function(index, cell) {
+            $('#'+cell).val(jsonReturned[cell]);
+        });
+    });
+    $.each(cellNames, function(index, cell) {
+        if (!inputedCells[cell]) {
+            if ($('#'+cell).val() != ''){
+                $('#'+cell).attr('disabled', 'disabled');
+            } else {
+                $('#'+cell).attr('disabled', 'enabled');
+            }
+        }
+    });
 });
 
-$.get("/physics.json", function(values) {
-    alert(values);
-});
+

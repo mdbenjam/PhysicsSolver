@@ -8,16 +8,7 @@
         <div id="content">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div id="toolButtons" class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-primary active">
-                                <input id="trajectory" type="radio" name="options" id="option1"> Trajectory
-                            </label>
-                            <label class="btn btn-primary">
-                                <input id="finalPosition" type="radio" name="options" id="option2" > Final Position
-                            </label>
-                        </div>
-                    </div>
+
                 </div>
 
                 <div class="row">
@@ -30,13 +21,13 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon">Time:</span>
-                            <input id="time" type="text" class="form-control" placeholder="Time">
+                            <input id="t" type="text" class="form-control" placeholder="Time">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon">Gravity:</span>
-                            <input id="gravity" type="text" class="form-control" placeholder="9.81">
+                            <input id="ay" type="text" class="form-control" placeholder="9.81">
                         </div>
                     </div>
                 </div>
@@ -44,19 +35,19 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon">Initial Velocity:</span>
-                            <input id="initialVelocity" type="text" class="form-control" placeholder="Velocity">
+                            <input id="v0" type="text" class="form-control" placeholder="Velocity">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon">Initial x-Velocity:</span>
-                            <input id="initialXVelocity" type="text" class="form-control" placeholder="x-Velocity">
+                            <input id="vx0" type="text" class="form-control" placeholder="x-Velocity">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon">Initial y-Velocity:</span>
-                            <input id="initialYVelocity" type="text" class="form-control" placeholder="y-Velocity">
+                            <input id="vy0" type="text" class="form-control" placeholder="y-Velocity">
                         </div>
                     </div>
                 </div>
@@ -72,7 +63,7 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">Final y-Velocity:</span>
-                                <input id="finalYVelocity" type="text" class="form-control possibleHighlight" placeholder="y-Velocity">
+                                <input id="vyf" type="text" class="form-control possibleHighlight" placeholder="y-Velocity">
                             </div>
                         </div>
                     </div>
@@ -81,13 +72,13 @@
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">x-Distance:</span>
-                                <input id="finalXPosition" ype="text" class="form-control possibleHighlight" placeholder="x-Distance">
+                                <input id="dxf" ype="text" class="form-control possibleHighlight" placeholder="x-Distance">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="input-group">
                                 <span class="input-group-addon">y-Height:</span>
-                                <input id="finalYPosition" type="text" class="form-control possibleHighlight" placeholder="y-Height">
+                                <input id="dyf" type="text" class="form-control possibleHighlight" placeholder="y-Height">
                             </div>
                         </div>
                     </div>
@@ -95,7 +86,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div id="myPopover" data-content="Since you selected a non-standard location, you must specify at one of the highlighted fields." data-original-title="Specification Needed" ></div>
+                        <div id="myPopover" data-content="Since you selected a non-standard location, you must specify at least one of the highlighted fields. If you do not specify either the velocity or angle then you'll need to specify two of the higlighted fields." data-original-title="Specification Needed"></div>
                         <div id="canvasWrapper">
                             <canvas id="drawing" width="800px" height="500px">
                             </canvas>
