@@ -10,8 +10,8 @@ eq_list.append(eq4)
 '''
 
 import string
-import math
 from sympy import S, Eq, solve
+
 
 def readEquations(inputFile):
     equationFile = open(inputFile)
@@ -51,70 +51,59 @@ def substitute(expression, **kwargs):
     return expression.subs(kwargs)
 
 
-def solvefor(value_dic, input_list ,desired):
+def solvefor(value_dic, input_list, desired):
+    # [equation, *args]
     eq_list = readEquations("equations2.txt")
-    return_dic = {}
-    #input_list = ['x','a','f','q']
-    #desired = 'r'
-    
-    #TEST2 input_list = ['mols','mass']
-    #TEST2 desired = 'molar_mass'
-    print "Input: " + str(input_list)
-    #input_list = ['v0','angle','ay','vyf','dy0']
-    #desired = 'dyf'
-    
-    #input_list = ['pressure','volume','temperature','number_molecules','molecular_mass']
-    #desired = 'v_rms'
-    
+    # return value
+    rv = {}
+    # variables we are able to solve for now
     found_list = []
+    # equations in chronological order used to find found_list
     solution_equations = []
+    # solution_equations rewritten in terms of found_list
     solved_for_list = []
+    # number of iterations
     loops = 0
-    solved_dic = {}
-    #value_dic = {'x':5,'a':2,'f':3,'q':10}
-    #value_dic = {'v0':5,'angle':45,'ay':-9.8,'vyf':0,'dy0':0}
-    
     while(loops < 5):
+        # for every equation in equation list
         for i1 in range(len(eq_list)):
-            equation_length = len(eq_list[i1])-1
+            # number of variables in equations
+            equation_length = len(eq_list[i1]) - 1
+            # number of matches between input and current equation
             collisions = 0
-            for i2 in range(1, len(eq_list[i1])):    
-                #print eq_list[i1][i2]
+            # count collisions
+            for i2 in range(1, len(eq_list[i1])):
                 for i3 in range(len(input_list)):
                     if(input_list[i3] == eq_list[i1][i2]):
-                        collisions+=1
-            if(collisions == equation_length-1): #Any False Cases?
+                        collisions += 1
+            # check if we're able to solve for another variable
+            if collisions == equation_length - 1:
                 solution_equations.append(eq_list[i1][0])
                 for i2 in range(1, len(eq_list[i1])):
+                    # 
                     matches = 0
                     for i3 in range(len(input_list)):
                         if(input_list[i3] == eq_list[i1][i2]):
-                            matches+=1
-                    if(matches == 0):
+                            matches += 1
+                    if matches == 0:
                         input_list.append(eq_list[i1][i2])
                         found_list.append(eq_list[i1][i2])
-        loops+=1
+        loops += 1
+        # break out of loop
         for i4 in range(len(input_list)):
-            if(input_list[i4] == desired):
-                loops=100
-        #print input_list
-        print solution_equations
+            if input_list[i4] == desired:
+                loops = 100
+        # set symbols
         for i in range(len(input_list)):
             exec(str(input_list[i]) + " = S('" + input_list[i] + "')")
+        assert solution_equations, solution_equations
         for i in range(len(solution_equations)):
             if(i == 0):
                 solved_for_list.append(solve_for(eval("Eq(%s)"%solution_equations[i]), found_list[i]))
             else:
-                solved_dic[found_list[i-1]] = solved_for_list[i-1]
                 solved_for_list.append(solve_for(substitute(eval("Eq(%s)"%solution_equations[i]), **solved_dic), found_list[i]))
-                #print solved_for_list
-        print "We used " + str(len(solution_equations)) + " equations and found a numerical answer of:"
         #for i in range(len(input_list)):
         #    substitute(solved_for_list[-1], a=2)
-        print desired + " = " + str(substitute(solved_for_list[-1], **value_dic))
-        return_dic['value']  = str(substitute(solved_for_list[-1], **value_dic))
-        return_dic['eqs'] = solution_equations
-        #print desired + " = " + str(substitute(solved_for_list[-1], pressure=1.5, volume=5.0, molecular_mass=40.0, number_molecules=1000.0))
-        #print solve_for(eval("Eq(%s)"%solution_equations[-1]), m)
-        #print substitute(substitute(m + x, m=f/a, x=10), f=20, a=2)
-        return return_dic
+        rv['value']  = str(substitute(solved_for_list[-1], **value_dic))
+        rv['eqs'] = solution_equations
+        return rv
