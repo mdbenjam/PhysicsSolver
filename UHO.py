@@ -104,8 +104,6 @@ def solvefor(value_dic, input_list, desired):
                 solved_for_list.append(solve_for(substitute(eval("Eq(%s)"%solution_equations[i]), **solved_dic), found_list[i]))
         #for i in range(len(input_list)):
         #    substitute(solved_for_list[-1], a=2)
-        rv['compound'] = str(solved_for_list[-1])
         rv['value']  = str(substitute(solved_for_list[-1], **value_dic))
         rv['eqs'] = solution_equations
-        rv['desired'] = desired
         return rv
