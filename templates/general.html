@@ -1,15 +1,19 @@
 {% extends "_base.html" %}
+
 {% block body %}
 <form method="post">
     <p> 
     <button id="addVar">Add Variable</button>
-    <input required id="varName" type="text"></input>
+    <label for="varName">Variable:</label><input required id="varName" type="text"></input>
     </p>
     <input id="submit" type="submit" value="Check">
 </form>
 <div id="response">
 </div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+{% endblock %}
+
+
+{% block js %}
 <script>
     var getVariable = function(varName) {
         return '<p><label for="' + varName + '">' + varName + '</label><input class="value" type="number" name="' + varName + '" id="' + varName + '"><button class="removeVar">Remove Variable</button></p>';
@@ -49,5 +53,9 @@
             $("#response").text(rv);
         });
     })
+
+    $("#varName").typeahead({
+        source: ["force", "mass", "acceleration"],
+    });
 </script>
 {% endblock %}
