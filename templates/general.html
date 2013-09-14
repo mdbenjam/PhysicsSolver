@@ -19,7 +19,7 @@
 </form>
 <div id="response">
     <h2>Value</h2>
-    <p><span id="value"></span></p>
+    <p><span id="desired"></span> = <span id="compound"></span> = <span id="value"></span></p>
     <h2>Equations used</h2>
     <ol id="equations"></ol>
 </div>
@@ -52,11 +52,13 @@
         }
     });
 
-    var showResult = function(value, equations) {
+    var showResult = function(value, equations, desired, compound) {
         var i;
         var $response = $("#equations");
         $response.empty();
         $("#value").text(value);
+        $("#desired").text(desired);
+        $("#compound").text(compound);
         for (i = 0; i < equations.length; i++) {
             $response.append('<li>' + equations[i] + '</li>');
         }
@@ -74,7 +76,7 @@
 
         $.get("/physics.json", data, function(rv) {
             data = JSON.parse(rv)
-            showResult(data.value, data.eqs);
+            showResult(data.value, data.eqs, data.desired, data.compound);
         });
     })
 
