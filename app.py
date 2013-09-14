@@ -1,6 +1,6 @@
 import json
 import random
-
+from UHO import solvefor
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
@@ -17,10 +17,21 @@ def index():
 
 @app.route("/physics.json")
 def physics():
-    rv = {}
+    input_dic = {}
+    input_list = []
+    output_dic = {}
+    returned_dic = {}
     for k in request.args:
-        rv[k] = random.randint(0, 100)
-    return json.dumps(rv)
+        request.args[k]
+        k
+        try:
+            input_dic[k] = float(request.args[k])
+            input_list.append(k)
+        except ValueError:
+            output_dic[k] = random.randint(0, 100)
+    for k in output_dic:
+        returned_dic = solvefor(input_dic,input_list, k)
+    return json.dumps(returned_dic)
 
 
 @app.route("/general")
