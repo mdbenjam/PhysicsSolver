@@ -270,10 +270,10 @@ $(".form-control").change(function () {
     });
     $.each(cellNames, function(index, cell) {
         if (!inputedCells[cell]) {
-            if ($('#'+cell).val() != '' || isNumber($('#'+cell).val())){
-                $('#'+cell).attr('disabled', 'disabled');
+            if (isNumber($('#'+cell).val())){
+                //$('#'+cell).attr('disabled', 'disabled');
             } else {
-                $('#'+cell).attr('disabled', 'enabled');
+                //$('#'+cell).attr('disabled', 'enabled');
             }
         }
     });

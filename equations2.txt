@@ -1,6 +1,6 @@
 # Kinematics Equations
 #dxf = 1 / 2 * ax * t ** 2 + vx0 * t + dx0
-dyf = 1 / 2 * ay * t ** 2 + vy0 * t + dy0
+dyf , 1 / 2 * ay * t ** 2 + vy0 * t + dy0
 
 #vxf = vx0 + ax * t
 vyf , vy0 + ay * t
