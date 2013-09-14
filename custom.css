@@ -1,0 +1,28 @@
+#content {
+    width: 800px;
+    margin: 0px auto;
+}
+
+#canvasWrapper {
+    margin: 0px auto;
+    width: 800px;
+    height: 500px;
+    border: 1px solid black;
+}
+
+#toolButtons {
+    margin: 0px;
+    text-align: center;
+}
+
+.row {
+    margin-bottom: 5px;
+}
+
+#myPopover {
+    position: absolute;
+}
+
+#highlightedRegion {
+    padding: 5px;
+}
