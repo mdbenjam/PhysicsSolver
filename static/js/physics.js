@@ -148,7 +148,7 @@ $("#myPopover").popover();
 
 $("#angle").change(function() {
     console.log("event");
-    theta = parseFloat($("#angle").val()) * Math.PI / 180; 
+    theta = parseFloat($("#angle").val()); 
     console.log("theta" + theta);
     drawScene();
 });
@@ -218,6 +218,37 @@ $("#drawing").click(function(e) {
             }
         } 
         freeze = true;
+    angle = $("#angle").val();
+    t = $("#t").val();
+    ay = $("#ay").val();
+
+    v0 = $("#v0").val();
+    vx0 = $("#vx0").val();
+    vy0 = $("#vy0").val();
+
+    vf = $("#vf").val();
+    vyf = $("#vyf").val();
+
+    dxf = $("#dxf").val();
+    dyf = $("#dyf").val();
+    if (isNumber(v0)) {
+        $("#vx0").val(Math.cos(angle) * v0);
+        $("#vy0").val(Math.sin(angle) * v0);
+    }
+    if (isNumber(dyf)) {
+        t = (-vy0 - Math.sqrt(vy0*vy0 + 2 * ay * dyf)) / ay;
+        dxf = t * vx0;
+        console.log(vy0);
+        console.log(Math.sqrt(vy0*vy0 + 2 * ay * dyf));
+        console.log(t);
+        vyf = parseFloat(vy0) + t *parseFloat(ay);
+        vxf = vx0;
+        vf = Math.sqrt(vyf * vyf + vxf * vxf);
+        $("#t").val(t);
+        $("#dxf").val(dxf);
+        $("#vyf").val(vyf);
+        $("#vf").val(vf);
+    }
     }
 });
 
@@ -264,10 +295,32 @@ $(".form-control").change(function () {
     };
     $.get("/physics.json", values, function(returned) {
         jsonReturned = JSON.parse(returned);
-        $.each(cellNames, function(index, cell) {
+        /*$.each(cellNames, function(index, cell) {
             $('#'+cell).val(jsonReturned[cell]);
-        });
+        });*/
+        
+
     });
+
+    if (isNumber(v0)) {
+        $("#vx0").val(Math.cos(angle) * v0);
+        $("#vy0").val(Math.sin(angle) * v0);
+    }
+    if (isNumber(dyf)) {
+        t = (-vy0 - Math.sqrt(vy0*vy0 + 2 * ay * dyf)) / ay;
+        dxf = t * vx0;
+        console.log(vy0);
+        console.log(Math.sqrt(vy0*vy0 + 2 * ay * dyf));
+        console.log(t);
+        vyf = parseFloat(vy0) + t *parseFloat(ay);
+        vxf = vx0;
+        vf = Math.sqrt(vyf * vyf + vxf * vxf);
+        $("#t").val(t);
+        $("#dxf").val(dxf);
+        $("#vyf").val(vyf);
+        $("#vf").val(vf);
+    }
+
     $.each(cellNames, function(index, cell) {
         if (!inputedCells[cell]) {
             if (isNumber($('#'+cell).val())){

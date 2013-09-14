@@ -21,17 +21,21 @@ def physics():
     input_list = []
     output_dic = {}
     returned_dic = {}
+
     for k in request.args:
         try:
             input_dic[k] = float(request.args[k])
             input_list.append(k)
         except ValueError:
             output_dic[k] = random.randint(0, 100)
-    print input_list
-    print output_dic
-    print input_dic
+        returned_dic[k] = request.args[k]
+
     for k in output_dic:
-        returned_dic = solvefor(input_dic,input_list, k)
+        print "solvefor", input_dic, input_list, k
+        hold = solvefor(input_dic,input_list, k)
+        print k, hold
+        if (hold != None and 'value' in hold):
+            returned_dic[k] = hold['value']
     return json.dumps(returned_dic)
 
 

@@ -9,11 +9,11 @@ vxf ** 2 , vx0 ^ 2 + 2 * ax * dx
 vyf ** 2 , vy0 ^ 2 + 2 * ay * dy
 
 # Vectors
-#vx0 , v0 * math.cos( angle )
-#vy0 , v0 * math.sin( angle )
+vx0 , v0 * cos( angle )
+vy0 , v0 * sin( angle )
 
-#vxf , vf * math.cos( angle )
-#vyf , vf * math.sin( angle )
+vxf , vf * cos( angle )
+vyf , vf * sin( angle )
 
-#ax , a * math.cos( angle )
-#ay , a * math.sin( angle )
+ax , a * cos( angle )
+ay , a * sin( angle )

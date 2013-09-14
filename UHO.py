@@ -10,7 +10,7 @@ eq_list.append(eq4)
 '''
 
 import string
-from sympy import S, Eq, solve
+from sympy import S, Eq, solve, sin, cos, tan, sqrt, log
 
 
 def readEquations(inputFile):
@@ -53,7 +53,7 @@ def substitute(expression, **kwargs):
 
 def solvefor(value_dic, input_list, desired):
     # [equation, *args]
-    eq_list = readEquations("equations2.txt")
+    eq_list = readEquations("equations.txt")
     # return value
     rv = {}
     # variables we are able to solve for now
@@ -62,6 +62,7 @@ def solvefor(value_dic, input_list, desired):
     solution_equations = []
     # solution_equations rewritten in terms of found_list
     solved_for_list = []
+    solved_dic = {}
     # number of iterations
     loops = 0
     while(loops < 5):
@@ -96,12 +97,20 @@ def solvefor(value_dic, input_list, desired):
         # set symbols
         for i in range(len(input_list)):
             exec(str(input_list[i]) + " = S('" + input_list[i] + "')")
-        assert solution_equations, solution_equations
+
+        if (len(solution_equations) == 0):
+            print "FAILED"
+            return;
+
+        print solution_equations
+
         for i in range(len(solution_equations)):
-            if(i == 0):
+            if (i == 0):
                 solved_for_list.append(solve_for(eval("Eq(%s)"%solution_equations[i]), found_list[i]))
             else:
-                solved_for_list.append(solve_for(substitute(eval("Eq(%s)"%solution_equations[i]), **solved_dic), found_list[i]))
+                solved_dic[found_list[i-1]] = solved_for_list[i-1]
+
+        solved_for_list.append(solve_for(substitute(eval("Eq(%s)"%solution_equations[i]), **solved_dic), found_list[i]))
         #for i in range(len(input_list)):
         #    substitute(solved_for_list[-1], a=2)
         rv['value']  = str(substitute(solved_for_list[-1], **value_dic))
