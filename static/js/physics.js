@@ -73,8 +73,60 @@ function drawScene() {
             ctx.stroke();
         }
     };
+/*
+    var drawParabola2 = function(x1, y1, x2, y2) {
+        var startingX = x;
+        var startingY = y;
+        var h = canvasWidth / 2;
+        if (slope < 0) {
+            h = 0;
+        }
+
+        if (slope === 0) {
+            h = x;
+            x = x + 1;
+            y = y + 1;
+            slope = -.0002;
+        }
+
+        var k = 0;
+
+        var a = -slope / ( 2 * (x - h) ) 
+            var b = -2 * a * h
+            var c = y - (a * x * x + b * x)
+
+            iterations = 0;
+        while (y < canvasHeight && iterations < 100) {
+            iterations = iterations + 1;
+            x = x + 10;
+            y = a * x * x + b * x + c;
+
+            ctx.fillStyle = "#FF0000"
+                ctx.beginPath();
+            ctx.arc(x, y, 2, 0, 2*Math.PI);
+            ctx.stroke();
+        }
+        if (trajectorySelected) {
+            ghostBallX = mouseX;
+            if (mouseX < ballX) {
+                ghostBallX = ballX;
+            }
+            if (Math.abs(mouseX - h) < 10) {
+                ghostBallX = h;
+            }
+            if (Math.abs(mouseX - (2 * h - startingX)) < 10) {
+                ghostBallX = (2 * h - startingX);
+            }
+            ctx.beginPath();
+            ghostBallY = a * ghostBallX * ghostBallX + b * ghostBallX + c;
+            ctx.arc(ghostBallX, ghostBallY, radius, 0, 2*Math.PI);
+            ctx.stroke();
+        }
+    };*/
     if (theta != undefined) {
         drawParabola(Math.tan(theta), ballX, ballY);
+    } else {
+        //drawParabola2(Math.tan(theta), ballX, ballY);
     }
 
 
@@ -230,7 +282,7 @@ $(".form-control").change(function () {
     });
     $.each(cellNames, function(index, cell) {
         if (!inputedCells[cell]) {
-            if ($('#'+cell).val() != ''){
+            if (isNumber($('#'+cell).val())){
                 $('#'+cell).attr('disabled', 'disabled');
             } else {
                 $('#'+cell).attr('disabled', 'enabled');
