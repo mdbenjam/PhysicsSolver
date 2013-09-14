@@ -101,9 +101,14 @@ def solvefor(value_dic, input_list, desired):
             if(i == 0):
                 solved_for_list.append(solve_for(eval("Eq(%s)"%solution_equations[i]), found_list[i]))
             else:
-                solved_for_list.append(solve_for(substitute(eval("Eq(%s)"%solution_equations[i]), **solved_dic), found_list[i]))
+                solved_dic = {}
+                solved_dic[found_list[i-1]] = solved_for_list[i-1]
+                solved_for_list.append(solve_for(substitute(eval("Eq(%s)" % solution_equations[i]), **solved_dic), found_list[i]))
+
         #for i in range(len(input_list)):
         #    substitute(solved_for_list[-1], a=2)
         rv['value']  = str(substitute(solved_for_list[-1], **value_dic))
         rv['eqs'] = solution_equations
+        rv['compound'] = str(solved_for_list[-1])
+        rv['desired'] = desired
         return rv
